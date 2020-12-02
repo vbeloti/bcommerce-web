@@ -35,6 +35,7 @@ type ProductProps = {
   id: string;
   id_user: string;
   quant: number;
+  featured: string;
 };
 
 const DataProvider: React.FC = ({ children }) => {

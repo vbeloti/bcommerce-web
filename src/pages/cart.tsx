@@ -18,6 +18,7 @@ type ProductProps = {
   id: string;
   id_user: string;
   quant: number;
+  featured: string;
 };
 
 export default function Cart() {

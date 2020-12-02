@@ -20,6 +20,7 @@ type ProdProps = {
   id: string;
   id_user: string;
   quant: number;
+  featured: string;
 };
 
 type ProductProps = {
