@@ -1,11 +1,18 @@
 import { Container, BoxLabel } from "../styles/register/register";
 import Link from "next/link";
-import { ChangeEvent, FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { toast } from 'react-toastify';
+import api from "../services/api";
+import Router from 'next/router';
+import { useRouter } from "next/router";
 
 export default function Register() {
+  const router = useRouter();
+
   const [selectedFile, setSelectedFile] = useState<File>();
   const [preview, setPreview] = useState<any>();
   const [name, setName] = useState("");
+  const [type, setType] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -16,6 +23,12 @@ export default function Register() {
     preview: "",
     email: "",
   });
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("b@Commerce"));
+
+    if (data?.id) router.push('/');
+  }, []);
 
   useEffect(() => {
     if (!selectedFile) {
@@ -53,6 +66,20 @@ export default function Register() {
       setError({ ...error, name: "O Nome não pode ser vazio" });
     }
 
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('password', password);
+    formData.append('email', email);
+    formData.append('photo', selectedFile);
+    formData.append('type', type);
+
+    api.post("users", formData).then(res => {
+      if(res.status === 201) {
+        toast.success('Cadastro Realizado');
+        Router.push('/login');
+      }
+    }).
+    catch(error => toast.error(error?.response?.data?.message));
   };
 
   return (
@@ -103,6 +130,12 @@ export default function Register() {
           )}
         </div>
 
+        <label htmlFor="type">Tipo:</label>
+        <select value={type} onChange={(e) => setType(e.target.value)}>
+          <option value="client">Cliente</option>
+          <option value="user">Criador de Conteúdo</option>
+        </select>
+
         <BoxLabel>
           <label htmlFor="avatar">
             Avatar:
@@ -117,7 +150,7 @@ export default function Register() {
                 <img id="photo" src={preview} alt="Upload Icon" />
               </div>
             )}
-            <img id="icon" src="upload.svg" alt="Upload Icon" />
+            <img id="icon" src="/upload.svg" alt="Upload Icon" />
           </label>
         </BoxLabel>
 

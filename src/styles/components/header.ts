@@ -24,6 +24,7 @@ export const Container = styled.div`
 `;
 
 export const Logo = styled.div`
+    cursor: pointer;
 
     img {
         max-width: 200px;
@@ -36,7 +37,7 @@ export const Logo = styled.div`
 
 export const Search = styled.div`
     position: relative;
-    flex: 0.7;
+    flex: 0.5;
 
     input {
         padding: 0.5rem 0;
@@ -58,7 +59,7 @@ export const Search = styled.div`
         content: '';
         width: 15px;
         height: 15px;
-        background-image: url('loupe.svg');
+        background-image: url('/loupe.svg');
         position: absolute;
         top: 7px;
         left: 0;
@@ -71,9 +72,21 @@ export const Search = styled.div`
 `;
 
 export const Cart = styled.div`
+    cursor: pointer;
     display: flex;
+    align-items: center;
 
-    span {
+    button {
+        cursor: pointer;
+        border: 0;
+        background-color: transparent;
+    }
+
+    img {
+        max-width: 20px;
+    }
+
+    p {
         margin-left: 0.5rem;
     }
 
@@ -86,9 +99,12 @@ export const Logged = styled.div`
     display: flex;
     align-items: center;
 
-    img {
+    > img {
+        cursor: pointer;
         width: 40px;
+        height: 40px;
         object-fit: cover;
+        border-radius: 50%;
     }
 
     p {
@@ -101,6 +117,26 @@ export const Logged = styled.div`
 `;
 
 export const Logout = styled.div`
+    display: flex;
+    align-items: center;
+
+    img {
+        cursor: pointer;
+        margin-left: 0.5rem;
+        max-width: 20px;
+    }
+
+    p {
+        margin-left: 2px;
+        cursor: pointer;
+    }
+
+    @media (max-width: 930px) {
+        justify-self: center;
+    }
+`;
+
+export const Login = styled.div`
     a {
         text-decoration: none;
         color: #222831;

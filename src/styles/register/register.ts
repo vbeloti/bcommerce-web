@@ -59,7 +59,7 @@ export const Container = styled.div`
         margin-bottom: 0.4rem;
     }
 
-    input, button {
+    input, button, select {
         height: 2.2rem;
         border: 0;
         border: 1px solid #eeeeee;

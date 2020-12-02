@@ -11,6 +11,7 @@ import { useData } from "../contexts/data-context";
 import { useRouter } from "next/router";
 
 type ProdProps = {
+  quant: number;
   description: string;
   genre: string;
   photo: string;
@@ -19,7 +20,6 @@ type ProdProps = {
   type: string;
   id: string;
   id_user: string;
-  quant: number;
 };
 
 type ProductProps = {
@@ -28,6 +28,7 @@ type ProductProps = {
   cart: ProdProps[];
   setCart: Dispatch<ProdProps[]>;
   seeCart: boolean;
+  quant: number;
 };
 
 type UserProps = {
@@ -38,42 +39,22 @@ type UserProps = {
   type: string;
 };
 
-export default function Product({
+export default function ProductCart({
   product,
-  user,
+  quant,
   cart,
   setCart,
   seeCart,
 }: ProductProps) {
-  let { counter, setCounter } = useData();
+  let { counter } = useData();
+  const router = useRouter();
 
   const handleAddCart = (product: ProdProps) => {
-    setCounter(counter + 1);
-
-    const objIndex = cart.findIndex((obj) => obj?.id === product?.id);
-    console.log(objIndex !== -1 && cart[objIndex]);
-
-
-    if (cart.length) {
-      let verifyProduct = false;
-
-      for (const iterator of cart) {
-        if (iterator?.id === product?.id) {
-          verifyProduct = true;
-        }
-      }
-
-      if (!verifyProduct)
-        setCart([...cart, Object.assign({}, product, { quant: counter })]);
-      // else 
-        // if (objIndex !== -1 && cart[objIndex].quant) cart[objIndex].quant = counter;
-    } else {
-      setCart([...cart, Object.assign({}, product, { quant: 1 })]);
-    }
+    setCart(cart?.filter((productFilter) => productFilter.id !== product.id));
   };
 
   return (
-    <Container cart={false}>
+    <Container cart={true}>
       <Link href={`products/${product?.id}`}>
         <img
           src={`${process.env.NEXT_PUBLIC_URL_IMG}/${product?.photo}`}
@@ -84,16 +65,9 @@ export default function Product({
       <Price>R${product?.price}</Price>
       <Add onClick={() => handleAddCart(product)}>
         <img src="/cart.svg" alt="Logo Carrinho" />
-        <p>Adicionar</p>
+        <p>Remover</p>
       </Add>
-      {user?.type === "user" && Number(user?.id) === Number(product?.id_user) && (
-        <Link href={`edit/${product?.id}`}>
-          <Edit type="submit">
-            <img src="/edit.svg" alt="Logo Editar" />
-            <p>Editar</p>
-          </Edit>
-        </Link>
-      )}
+      {/* {<h5>Quantidade: { quant || 1}</h5>} */}
     </Container>
   );
 }

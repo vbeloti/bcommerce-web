@@ -1,6 +1,11 @@
 import { Container } from "../styles/login/login";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
+import api from "../services/api";
+import { toast } from 'react-toastify';
+import Router from 'next/router';
+import { useData } from "../contexts/data-context";
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -16,6 +21,15 @@ export default function Login() {
     if (email === "") {
       setError({ ...error, email: "O Email não pode ser vazio" });
     }
+
+    api.post("login", { email, password }).then(res => {
+      if(res.status === 200) {
+        toast.success('Login Efetuado');
+        localStorage.setItem("b@Commerce", JSON.stringify(res.data));
+        Router.push('/');
+      }
+    }).
+    catch(error => toast.error(error?.response?.data?.message));
   };
 
   return (
@@ -29,7 +43,7 @@ export default function Login() {
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            type="email"
+            type="text"
             id="email"
           />
           {error.email && <span id="erro">{error.email}</span>}

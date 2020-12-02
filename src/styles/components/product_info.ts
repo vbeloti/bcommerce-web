@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    flex: 0.8;
+
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 
     img {
-        width: 200px;
+        width: 100%;
+        max-width: 600px;
         height: 200px;
         object-fit: cover;
         border-radius: 1rem;
@@ -16,7 +17,6 @@ export const Container = styled.div`
 
     button {
         display: block;
-        margin: 0 auto;
         color: #FAFAFA;
         border: none;
         padding: 10px 10px;
@@ -35,12 +35,12 @@ export const Container = styled.div`
 `;
 
 export const Info = styled.div`
-     padding: 0 1rem;
-     border-radius: 1rem;
+    margin-left: 1rem;
+    width: 100%;
+    max-width: 400px;
 `;
 
 export const Title = styled.h1`
-    margin: 1rem 0;
 `;
 
 export const Description = styled.p`
@@ -49,7 +49,6 @@ export const Description = styled.p`
 
 export const Price = styled.h4`
     margin: 1rem 0;
-    text-align: right;
 `;
 
 

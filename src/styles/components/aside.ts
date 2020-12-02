@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.aside`
     flex: 0.2;
@@ -39,18 +39,30 @@ export const Categories = styled.div`
     padding: 0.2rem 0;
 `;
 
-export const Category = styled.div`
+type CategoryProps = {
+    selected?: boolean;
+}
+
+export const Category = styled.div<CategoryProps>`
+    /* border: 0;
+    background-color: transparent; */
     display: flex;
     padding: 0.2rem 0;
     align-items: center;
     margin: 1rem 0;
     cursor: pointer;
 
-    &:hover {
+    ${props => props.selected && css`
+        background: #393e46;
+        color: white;
+        border-radius: 0.2rem;
+    `}
+
+    /* &:hover {
         background-color: #f6f6f6;
         border-radius: 0.5rem;
         color: #00bed8;
-    }
+    } */
 
     img {
         max-width: 30px;
