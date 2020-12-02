@@ -4,7 +4,6 @@ import { FormEvent, useState } from "react";
 import api from "../services/api";
 import { toast } from 'react-toastify';
 import Router from 'next/router';
-import { useData } from "../contexts/data-context";
 
 
 export default function Login() {
